@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang=de>
+    <head>
+        <meta charset="utf-8">
+        <title>Gephi: Präsentation</title>
+		<meta name="author" content="Roman Dorniok">
+		<meta name="theme-color" content="#002b36">
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/moon.css">
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section data-markdown data-background="https://s3-eu-west-1.amazonaws.com/pfigshare-u-previews/3371822/preview.gif">
+					<script type="text/template">
+						##### Einführung in
+						# Gephi
+						## Visualisierung großer Netzwerke
+						Seminar: Einführung in die Korpuslinguistik, WS 16/17
+						Dozent: Fabian Klinker
+						Referent: Roman Dorniok
+
+						Note:
+						- arbeiten in Korpuslinguistik teils mit großen Datenbeständen
+						- man verliert leicht den Überblick
+						- außerdem: Am Ende einer korpuslinguistischen Untersuchung sollte, wenn möglich, ein präsentables Ergebnis stehen
+						- beste Variante ist, die Daten zu visualisieren und anschaulich zu machen
+						- weiterhin können Visualisierungen dabei helfen, Muster in großen Datenbeständen ausfindig zu machen
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### Allgemeines
+						- in Frankreich an der Technische Universität Compiègne entwickelt
+						- quelloffene und kostenlose Software zur Visualisierung von Datensätzen
+						- basiert auf __NetBeans__ und damit auf __Java__
+						- daher Verfügbarkeit auf allen Plattformen, die Java beherrschen (welche nicht?)
+
+						Note:
+
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### 1. Installation und Plattformen
+						- Windows: https://github.com/gephi/gephi/releases/download/v0.9.1/gephi-0.9.1-windows.exe
+						- Mac OS X: https://github.com/gephi/gephi/releases/download/v0.9.1/gephi-0.9.1-macos.dmg
+						- Linux: https://github.com/gephi/gephi/releases/download/v0.9.1/gephi-0.9.1-linux.tar.gz
+
+						*Eine laufende Java-Umgebung ist erforderlich!*
+
+						Note:
+						- Installation dürfte kein Problem darstellen, bei Win und Mac ist eine Java-Umgebung idR vorinstalliert und lauffähig
+						- Ausnahme: bei Linux könnte es Schwierigkeiten geben, falls die Umgebung nicht richtig funktioniert
+						- u.a. auch bei mir, daher musste ich auf eine weniger schöne Lösung setzen
+						- bevor wir uns die Programmobefläche genauer anschauen, müssen wir uns aber mit ein paar Gundlagen auseinandersetzen, auf die ich jetzt eingehe.
+					</script>
+				</section>
+				<section>
+					<section data-transition="concave" data-markdown>
+						<script type="text/template">
+							### 2. Grundlagen
+							##### 2.1. Welche Daten werden gebraucht?
+							- Gephi verarbeitet __*Nodes*__ und __*Edges*__
+							- jedes dieser Elemente erhält eine eineindeutige ID + weitere mögliche Attribute
+							- 'network topology': alle Nodes und Edges
+							- 'network data': alle Attribute
+
+							Note:
+							- natürlich brauchen wir für unsere Zwecke ein Korpus
+							- einfache Wordcloud prima ohne Gephi, aber was *Gephi* beherrscht, um einiges wertvoller:
+							- Gephi verarbeitet Knoten und Kanten (nodes und edges), d.h. Zusammenhänge können graphistisch dargestellt werden
+							- bei einer Wordcloud ist das nicht so!
+							- unser Korpus muss aber noch an den Bedarf von Gephi angepasst werden, dazu gleich mehr...
+							- erstmal ein paar genauere Beispiele, was unter Knoten und Kanten zu verstehen ist:
+						</script>
+					</section>
+					<section data-transition="concave" data-markdown>
+						<script type="text/template">
+							###### Beispiel Nodes:
+							ID | Label | Modularity Class
+							---|---|---
+							0 | Alpha | 1
+							1 | Beta | 0
+							2 | Gamma | 0
+							3 | Delta | 0
+							4 | Epsilon | 1
+						</script>
+					</section>
+					<section data-transition="concave" data-markdown>
+						<script type="text/template">
+							###### Beispiel Edges:
+							Source | Target | Type | ID | Weight
+							---|---|---|---|---
+							0 | 1 | undirected | 0 | 0.05
+							1 | 2 | undirected | 1 | 0.01
+							2 | 3 | undirected | 2 | 0.01
+							... |  |  |  |
+						</script>
+					</section>
+				</section>
+				<section>
+					<section data-transition="concave">
+						<h4>2.2. Dateiformate</h4>
+						<p>
+							besonders geeignet: <a href="https://gephi.org/gexf/format/index.html">GEXF</a> (<u>G</u>raph <u>E</u>xchange <u>X</u>ML <u>F</u>ormat)
+						</p>
+						<ul>
+							<li>basiert auf XML</li>
+							<li>sehr einfach</li>
+							<li>Beispiel:</li>
+						</ul>
+						<pre><code class="hlxml" data-trim>
+&lt?xml version="1.0" encoding="UTF-8"?&gt
+&ltgexf&gt
+   &ltmeta&gt
+      &ltcreator&gtsome corpus linguist&lt/creator&gt
+      &ltdescription&gthello world&lt/description&gt
+   &lt/meta&gt
+   &ltgraph mode="static" defaultedgetype="directed"&gt
+      &ltattributes class="node"&gt
+         &ltattribute id="0" title="POS" type="string"/&gt
+      &lt/attributes&gt
+      &ltnodes&gt
+         &ltnode id="0" label="Hello"&gt
+            &ltattvalues&gt
+               &ltattvalue for="0" value="..."/&gt
+            &lt/attvalues&gt
+         &lt/node&gt
+         &ltnode id="1" label="World"&gt
+            &ltattvalues&gt
+               &ltattvalue for="0" value="..."/&gt
+            &lt/attvalues&gt
+         &lt/node&gt
+      &lt/nodes&gt
+      &ltedges&gt
+         &ltedge id="0" source="0" target="1" /&gt
+      &lt/edges&gt
+   &lt/graph&gt
+&lt/gexf&gt;
+						</code></pre>
+						<aside class="notes">
+							<ul>
+								<li>exemplarisch möchte ich hier mal ein Dateiformat vorstellen: GEXF</li>
+								<li>besitzt ein klares Aufbauschema</li>
+							</ul>
+						</aside>
+					</section>
+					<section data-transition="concave">
+						<ul>
+							<li>weitere Formate:</li>
+							<li>GML: <a href="https://de.wikipedia.org/wiki/Geography_Markup_Language">https://de.wikipedia.org/wiki/Geography_Markup_Language</a></li>
+							<li>GDF: <a href="https://de.wikipedia.org/wiki/Geographic_Data_Files">https://de.wikipedia.org/wiki/Geographic_Data_Files</a></li>
+							<li>GraphML: <a href="https://de.wikipedia.org/wiki/GraphML">https://de.wikipedia.org/wiki/GraphML</a></li>
+							<li>DOT: <a href="https://de.wikipedia.org/wiki/DOT_(GraphViz)">https://de.wikipedia.org/wiki/DOT_(GraphViz)</a></li>
+							<li>DL's (Description logics): <a href="https://de.wikipedia.org/wiki/Beschreibungslogik">https://de.wikipedia.org/wiki/Beschreibungslogik</a></li>
+							<li><a href="https://en.wikipedia.org/wiki/Category:Graph_description_languages">und weitere...</a></li>
+							<li><a href="https://github.com/gephi/gephi/wiki/Datasets">... und noch mehr.</a></li>
+						</ul>
+					</section>
+					<section data-transition="concave">
+						<img src="https://gephi.org/images/choose-file-format.png">
+
+						<aside class="notes">
+							<ul>
+								<li>Verschiedene Dateitypen haben verschiedene Anwendungszwecke bzw. sind für spezifische Zwecke geeignet</li>
+								<li>Alternativ können ausgewählte Datenbestände auch per Hand eingegeben werden</li>
+								<li>ist aber aufwendig und hat keinen Anspruch auf Vollständigkeit</li>
+								<li>Werbung für Perl-Kurs?</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<h3>3. Programm-Interface</h3>
+					</br>
+					<ul>
+						<li>Hauptarbeitsfeld besteht aus 3 Reitern/Tabs, die frei konfigurierbar sind</li>
+					</ul>
+					<img src="img/reiter.png">
+					<h5>3.1. <a href="#/6/0">Übersicht</a></h5>
+					<h5>3.2. <a href="#/7/0">Datenlabor</a></h5>
+					<h5>3.3. <a href="#/8/0">Vorschau</a></h5>
+
+					<aside class="notes">
+						<ul>
+							<li>Hauptarbeitsfeld besteht aus 3 Tabs, die frei konf.bar sind</li>
+							<li>in diesen 3 Tabs stehen wiederum spezifische Funktionen zur Verfügung</li>
+							<li>im Folgenden arbeite ich erstmal mit Screenshots, vielleicht ist nachher Zeit für mehr...</li>
+						</ul>
+					</aside>
+				</section>
+				<section>
+					<section data-transition="concave" data-background-transition="concave" data-background="img/uebersicht.png" data-background-size="full">
+						<h3 style="color: black">3.1. Übersicht</h3>
+
+						<aside class="notes">
+							<ul>
+								<li>mittig ganz prägnant der Graph mit vielen Mgl. zur Ansichtsveränderung</li>
+								<li>per Mausklick kann man einzelne oder mehrere Knoten manuell hin und her schubsen</li>
+								<li>soll uns nicht weiter interessieren</li>
+								<li>ist für uns nur eine Kontrollinstanz</li>
+								<li>worauf es ankommt, ist mathematische Präzision, und die schafft nur das Programm</li>
+								<li>dafür brauchen wir z.B. rechts die "Statistiken"-Fkt.</li>
+								<li>wichtige Algorithmen für eine authentische und korrekte Darstellung</li>
+								<li>z.B. die Modularität</li>
+								<li>Filter dienen zum Ausdünnen und Entschlacken des Graphen</li>
+								<li>mathematisch unwesentliche Aspekte werden bereinigt</li>
+								<li>links ist weniger hart mathematisch:</li>
+								<li>Layout und Ausgestaltung bringen den Graphen in Form und Farbe</li>
+							</ul>
+						</aside>
+					</section>
+					<section data-transition="concave">
+						<h5>3.1. Übersicht > Funktionen</h5>
+						</br>
+						<ul>
+							<li>Layout</li>
+							<li>Ausgestaltung</li>
+							<li>Statistik</li>
+							<li>Filter</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section data-transition="concave" data-background-transition="concave" data-background="img/datenlabor.png" data-background-size="full">
+						<h3 style="color: black">3.2. Datenlabor</h3>
+
+						<aside class="notes">
+							<ul>
+								<li>nicht erschrecken!</li>
+								<li>das ist der Grund, weshalb wir Gephi die Arbeit machen lassen wollen</li>
+								<li>Die Datentabelle enthält alle Knoten und Kanten, getrennt einsehbar</li>
+								<li>man kann auch manuell den Datensatz manipulieren</li>
+								<li>von Fall zu Fall zu unterscheiden, ob das sinnvoll ist</li>
+								<li>Programmierkurs!</li>
+							</ul>
+						</aside>
+					</section>
+					<section data-transition="concave">
+						<h5>3.2. Datenlabor > Funktionen</h5>
+						<ul>
+							<li>Separate Ansicht von Nodes und Edges</li>
+							<li>Zahlreiche Möglichkeiten zur Manipulation des Datensatzes</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section data-transition="concave" data-background-transition="concave" data-background="img/vorschau.png" data-background-size="full">
+						<h3 style="color: black">3.3. Vorschau</h3>
+
+						<aside class="notes">
+							<ul>
+								<li>wir sehen noch einmal den Graphen</li>
+								<li>zahlreiche Möglichkeiten zum Feinschliff an der Visualisierung</li>
+								<li>unauffällig, aber wichtig: die Exportfunktion</li>
+								<li>Einbeziehung von Voreinstellungen möglich, sehr praktisch, wenn nicht immer alles nochmal machen will</li>
+							</ul>
+						</aside>
+					</section>
+					<section data-transition="concave">
+						<h5>3.3. Vorschau > Funktionen</h5>
+						<ul>
+							<li>Dient allgemein zum optischen Feinschliff, v.a. mit Blick auf den Export als Bild- oder Videodatei</li>
+							<li>Anwendung von Voreinstellungen möglich</li>
+						</ul>
+					</section>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### 4. Tutorials und Wikis
+						- Offizielles Gephi-Wiki: https://github.com/gephi/gephi/wiki
+						- Offizieller Quick-Guide (pdf): https://gephi.org/tutorials/gephi-tutorial-quick_start.pdf
+						- Visualisieren eines Facebook-Netzwerks: https://www.youtube.com/watch?v=N3yv5E-hjbc
+						- Visualisierungen in der Linguistik: http://linguistik.zih.tu-dresden.de/lehre/blogs/visualisierungen/
+
+						Note:
+						- habe an der Oberfläche gekratzt
+						- es gibt viele Möglichkeiten, sich in das Thema zu vertiefen
+						- allgemein sind aber folgende Links geeignet, um als Einsteiger sich ein besseres Bild zu machen, als ich hier vermitteln konnte
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### 5. Literatur
+						- Bastian, Mathieu; Heymann, Sebastien; Jacomy, Mathieu: Gephi. An open source software for exploring and manipulating networks. International AAAI Conference on Weblogs and Social Media. 2009.
+
+						</br>
+						###### used software
+						- Präsentation: [reveal.js](https://github.com/hakimel/reveal.js)
+						- Gephi-Container: [DIT4C](https://hub.docker.com/r/dit4c/dit4c-container-gephi/)
+					</script>
+				</section>
+            </div>
+        </div>
+		<script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+        <script>
+            Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: false,
+				center: false,
+				slideNumber: true,
+				keyboard: true,
+				touch: true,
+				help: true,
+				hideAddressBar: true,
+				previewLinks: true,
+				//width: "100%",
+				//height: "100%",
+				//margin: 0,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+        </script>
+    </body>
+</html>
