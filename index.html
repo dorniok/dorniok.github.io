@@ -13,11 +13,14 @@
 				font-family: Inconsolata;
 				font-weight: 300;
 			}
-			a {
+			a.plain {
+				color: white;
+			}
+			a.btn {
 				height: 22px;
 				width: 25px;
 			}
-			a:link, a:visited {
+			a:link.btn, a:visited.btn {
 		    background-color: rgba(0, 45, 8, 0.5);
 		    color: white;
 		    padding: 14px 25px;
@@ -25,7 +28,7 @@
 		    text-decoration: none;
 		    display: inline-block;
 			}
-			a:hover, a:active {
+			a:hover.btn, a:active.btn {
 			  background-color: rgba(0, 60, 8, 0.5);
 			}
 		</style>
@@ -45,30 +48,30 @@
 			<tr>
 				<td>09.01.2018</td>
 				<td>Ovids Blick auf Welt in den Metamorphosen und in der Exildichtung</td>
-				<td><a href="pres_ovid.html"><img src="img/play.svg"></a></td>
-				<td><a href="pdf/pres_ovid.pdf">here</a></td>
+				<td><a class="btn" href="pres_ovid.html"><img src="img/play.svg"></a></td>
+				<td><a class="btn" href="pdf/pres_ovid.pdf">here</a></td>
 			</tr>
 			<tr>
 				<td>03.07.2017</td>
 				<td>Was sind Sondersprachen?</td>
-				<td><a href="pres_sondersprachen.html"><img src="img/play.svg"></a></td>
-				<td><a href="pdf/pres_sondersprachen.pdf">here</a></td>
+				<td><a class="btn" href="pres_sondersprachen.html"><img src="img/play.svg"></a></td>
+				<td><a class="btn" href="pdf/pres_sondersprachen.pdf">here</a></td>
 			</tr>
 			<tr>
 				<td>15.06.2017</td>
 				<td>Andrea Seier über Foucaults Machtbegriff (2001)</td>
-				<td><a href="pres_fmacht.html"><img src="img/play.svg"></a></td>
-				<td><a href="pdf/pres_fmacht.pdf">here</a></td>
+				<td><a class="btn" href="pres_fmacht.html"><img src="img/play.svg"></a></td>
+				<td><a class="btn" href="pdf/pres_fmacht.pdf">here</a></td>
 			</tr>
 			<tr>
 				<td>28.11.2016</td>
 				<td>Datenvisualisierung mit Gephi</td>
-				<td><a href="pres_gephi.html"><img src="img/play.svg"></a></td>
-				<td><a href="pdf/pres_gephi.pdf">here</a></td>
+				<td><a class="btn" href="pres_gephi.html"><img src="img/play.svg"></a></td>
+				<td><a class="btn" href="pdf/pres_gephi.pdf">here</a></td>
 			</tr>
 		</table>
 
-		<div style="position: fixed; bottom: 90%; right: 70%; top: 20px; left: 10%">E-Mail: ro.dorniok@gmail.com<br>Twitter: @g0yakla</div>
+		<div style="position: fixed; bottom: 90%; right: 70%; top: 20px; left: 10%">E-Mail: ro.dorniok@gmail.com<br>Twitter: <a class="plain" href="https://twitter.com/g0yakla">@g0yakla</a></div>
 
 	</body>
 </html>
