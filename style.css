@@ -1,0 +1,70 @@
+html {
+   background-color: rgb(30, 30, 30);
+   color: rgba(190, 190, 190, 1);
+}
+body {
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 20px;
+  font-family: Inconsolata;
+  font-weight: 300;
+}
+a.plain {
+  color: white;
+}
+a.btn {
+  height: 24pt;
+  width: 100%;
+}
+a:link.btn, a:visited.btn {
+  color: white;
+  padding: 20px 0px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+}
+a:hover.btn, a:active.btn {
+  background-color: rgba(122, 110, 2, 0.5);
+}
+
+.grid-container {
+  display: grid;
+  grid-gap: 50px;
+  grid-template-columns: auto auto auto auto;
+  justify-content: center;
+  align-content: center;
+  padding-top: 50px;
+}
+
+.grid-item {
+  position: relative;
+  background-color: rgba(0, 60, 8, 0.5);
+}
+
+.grid-item > div.title {
+  padding: 20px 20px;
+  /* background-color: rgba(0, 60, 8, 1); */
+  text-align: justify;
+}
+
+.grid-item > div.button-area {
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  text-decoration: none;
+}
+
+.preview {
+  object-fit: cover;
+  height: 350px;
+  width: 350px;
+}
+
+.space {
+  height: 144pt;
+  float: left;
+}
+
+div.button-area > a > img {
+  vertical-align: middle;
+}
